@@ -1,20 +1,34 @@
-from core.listener import listen
 from core.speaker import speak
-from core.commands import handle_command
-from core.jarvis_voice import speak
+from core.ai_response import get_ai_response
 
 def main():
-    speak("Hello Berto, I'm ready for your command.")
+    # Initial greeting
+    greeting = "Hello Roberto. I am online and ready to assist you."
+    print(f"Jarvis: {greeting}")
+    speak(greeting)
+
     while True:
         try:
-            command = listen()
-            if command:
-                print(f"You said: {command}")
-                response = handle_command(command)
-                speak(response)
+            user_input = input("You: ").strip()
+
+            if user_input.lower() in ['exit', 'quit', 'shutdown']:
+                farewell = "Shutting down. Have a great day, Roberto."
+                print(f"Jarvis: {farewell}")
+                speak(farewell)
+                break
+
+            # Get AI-generated response
+            ai_reply = get_ai_response(user_input)
+            print(f"Jarvis: {ai_reply}")
+            speak(ai_reply)
+
         except KeyboardInterrupt:
-            speak("Goodbye!")
+            print("\n[Interrupted by user]")
             break
+        except Exception as e:
+            error_msg = f"An error occurred: {e}"
+            print(f"Jarvis: {error_msg}")
+            speak("Sorry, something went wrong.")
 
 if __name__ == "__main__":
     main()
