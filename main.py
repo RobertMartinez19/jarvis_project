@@ -1,5 +1,8 @@
 from core.speaker import speak
 from core.ai_response import get_ai_response
+from core.commands import handle_command
+from core.jarvis_voice import speak
+from core.listener import listen
 
 def main():
     # Initial greeting
